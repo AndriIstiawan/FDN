@@ -1,18 +1,18 @@
 
-# SmartEye VR/AR Viewer App
+# FDN App
 
 ## Prerequisites
 1. Install Node.js latest
 
 2. Clone this repository:
 
-		https://gitlab.playcourt.id/amoeba/smarteye/api-mysql.git/
+		https://github.com/AndriIstiawan/FDN.git
 		
 
 ## How to build
 1. Change directory to one of the sample folders, e.g. platform-backend:
 
-		cd api-mysql/
+		cd FDN/
 
 2. Install the sample's dependencies (see the sample's README for details):
 
@@ -33,44 +33,18 @@
 
 ### Register & Login
 
-1. CREATE (melakukan registrasi) user baru
+1. GET Order
 
-	`POST` request ke `http://<server_ip>/api/v1/auth/register`
-
-	dengan form berisi:
-
-	* username
-
-	* password
-
-	* email
-
+	`GET` request ke `http://<server_ip>/api/v1/order?limit=&page=`
   
 
-2. LOGIN
+2. GET Order PIVOT
 
-	`POST` request ke `http://<server_ip>/api/v1/auth/login`
+	`GET` request ke `http://<server_ip>/api/v1/order/pivot?limit=&page=`
 
-	dengan form berisi:
-
-	* username
-
-	* password
-
-	Return object berisi:
-
-	`{
-
-	user: <username>,
-
-	token: <token_untuk_melakukan_modifikasi_data_selanjutnya>
-
-	}`
-  
 
 ## Contributing
 
-  
 
 1. Fork it!
 
