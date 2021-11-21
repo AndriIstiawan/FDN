@@ -17,6 +17,8 @@ services:
       - DB_PORT=$DB_PORT
     depends_on:
       - mysql
+    ports:
+    - "1337:1337"
 
   mysql:
     image: mysql
