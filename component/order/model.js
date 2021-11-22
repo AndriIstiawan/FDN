@@ -18,7 +18,7 @@ const Order = db.define('order', {
     email: {
         type: DataTypes.STRING, validate: { isEmail: { msg: "check your email is not valid" } }
     },
-    Item: {
+    item: {
         type: DataTypes.STRING
     },
     quantity: {

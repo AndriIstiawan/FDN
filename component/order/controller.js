@@ -1,6 +1,5 @@
 const Order = require("./model");
 const Sequelize = require("sequelize");
-const Op = Sequelize.Op
 const { fn, col } = Order.sequelize
 
 // Retrieve all Tutorials from the database.
@@ -56,6 +55,7 @@ exports.findAllPivot = async (req, res) => {
             currentPage: pageSize,
             nextPage: getNextPage(pageSize, pageLimit, dataAll.length),
             total: dataAll.length,
+            totalPage: dataAll.length / pageLimit,
             limit: pageLimit,
             data: data
         });
@@ -101,6 +101,7 @@ exports.findAll = async (req, res) => {
             currentPage: pageSize,
             nextPage: getNextPage(pageSize, pageLimit, count),
             total: count,
+            totalPage: dataAll.length / pageLimit,
             limit: pageLimit,
             data: rows
         });

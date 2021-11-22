@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "unit-test": "NODE_ENV=unit-test nyc --reporter=lcov --reporter=text mocha \"tests/**/**_unitTest.js\" --exit --timeout 10000"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -19,14 +20,17 @@
     "fs": "0.0.1-security",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
+    "mocha": "^9.1.3",
     "morgan": "~1.9.1",
     "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
     "node-mocks-http": "^1.11.0",
+    "nyc": "^15.1.0",
     "rewire": "^5.0.0",
     "sequelize": "^6.6.2",
     "sequelize-mock": "^0.10.2",
     "sinon": "^12.0.1",
-    "sinon-chai": "^3.7.0"
+    "sinon-chai": "^3.7.0",
+    "supertest": "^6.1.6"
   }
 }

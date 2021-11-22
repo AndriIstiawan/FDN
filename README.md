@@ -12,7 +12,7 @@
 		
 
 ## How to build
-1. Change directory to one of the sample folders, e.g. FDN-backend:
+1. Change directory to one of the sample folders, e.g. FDN:
 
 		cd FDN/
 
@@ -22,15 +22,30 @@
 
 3. Configure the environment variables in the `.env` file
 
-		cp example.env .env
+		cp dev-example.env .env
 
 4. Run the sample:
 
 		node app.js
+
+## How to build with docker
+1. Change directory to one of the sample folders, e.g. FDN:
+
+		cd FDN/
+
+2. Configure the environment variables in the `.env` file:
+
+		cp prod-example.env .env
+
+3. Run the docker:
+
+		docker-compose up -d
 		
 
 ## API Test
 ### How to run all test
+
+	1. npm install
 
 	1. npm run unit-test
 
