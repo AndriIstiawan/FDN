@@ -1,32 +1,32 @@
-const Order = require("./model");
-const Sequelize = require("sequelize");
-const { fn, col } = Order.sequelize
+const Order = require('./model');
+const Sequelize = require('sequelize');
+const { fn, col } = Order.sequelize;
 
 // Retrieve all Tutorials from the database.
 exports.findAllPivot = async (req, res) => {
     try {
-        const { limit, page } = req.query
+        const { limit, page } = req.query;
 
         const pageLimit = parseInt(limit, 10) || 10;
         const pageSize = parseInt(page, 10) || 1;
 
         const getPreviousPage = (pageSize) => {
             if (pageSize <= 1) {
-                return false
+                return false;
             }
             return true;
-        }
+        };
         const getNextPage = (page, limit, total) => {
             if ((total / limit) > page) {
                 return true;
             }
 
-            return false
-        }
+            return false;
+        };
         // Save Tutorial in the database
         const data = await Order.findAll({
             attributes: [
-                [fn('concat', col('firstname'), ' ', col('lastname')), "FullName"],
+                [fn('concat', col('firstname'), ' ', col('lastname')), 'FullName'],
                 ['email', 'Email'],
                 [fn('SUM', Sequelize.literal('CASE WHEN (Item="Barang1") THEN quantity ELSE 0 END')), 'Barang1'],
                 [fn('SUM', Sequelize.literal('CASE WHEN (Item="Barang2") THEN quantity ELSE 0 END')), 'Barang2'],
@@ -41,14 +41,14 @@ exports.findAllPivot = async (req, res) => {
             offset: (pageSize * pageLimit) - pageLimit,
             raw: true,
             plain: false,
-        })
+        });
 
         const dataAll = await Order.findAll({
             attributes: [
-                [fn('concat', col('firstname'), ' ', col('lastname')), "FullName"],],
+                [fn('concat', col('firstname'), ' ', col('lastname')), 'FullName'], ],
             group: 'FullName',
             raw: true,
-        })
+        });
 
         return res.json({
             previousPage: getPreviousPage(pageSize),
@@ -60,31 +60,31 @@ exports.findAllPivot = async (req, res) => {
             data: data
         });
     } catch (error) {
-        return res.status(500).send({ message: error.message || "Some error occurred while creating the Tutorial." });
+        return res.status(500).send({ message: error.message || 'Some error occurred while creating the Tutorial.' });
     }
 };
 
 // Find all published Tutorials
 exports.findAll = async (req, res) => {
     try {
-        const { limit, page } = req.query
+        const { limit, page } = req.query;
 
         const pageLimit = parseInt(limit, 10) || 10;
         const pageSize = parseInt(page, 10) || 1;
 
         const getPreviousPage = (pageSize) => {
             if (pageSize <= 1) {
-                return false
+                return false;
             }
             return true;
-        }
+        };
         const getNextPage = (page, limit, total) => {
             if ((total / limit) > page) {
                 return true;
             }
 
-            return false
-        }
+            return false;
+        };
         // Save Tutorial in the database
         const { count, rows } = await Order.findAndCountAll({
             order: [
@@ -94,18 +94,18 @@ exports.findAll = async (req, res) => {
             offset: (pageSize * pageLimit) - pageLimit,
             raw: true,
             plain: false,
-        })
+        });
 
         return res.json({
             previousPage: getPreviousPage(pageSize),
             currentPage: pageSize,
             nextPage: getNextPage(pageSize, pageLimit, count),
             total: count,
-            totalPage: dataAll.length / pageLimit,
+            totalPage: count / pageLimit,
             limit: pageLimit,
             data: rows
         });
     } catch (error) {
-        return res.status(500).send({ message: error.message || "Some error occurred while creating the Tutorial." });
+        return res.status(500).send({ message: error.message || 'Some error occurred while creating the Tutorial.' });
     }
 };
