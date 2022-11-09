@@ -11,4 +11,6 @@ router.get('/order/user', verifyToken, purchasing.findAllUser);
 
 router.get('/order/item', verifyToken, purchasing.findAllItem);
 
+router.get('/order/time', verifyToken, purchasing.findAllDate);
+
 module.exports = router;

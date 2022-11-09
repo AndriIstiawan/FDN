@@ -1,14 +1,10 @@
 
-# FDN App
+# Toko Mini App
 
 ## Prerequisites
 1. Install Node.js latest
 
-2. Install Mysql latest
-
-3. Clone this repository:
-
-		https://github.com/AndriIstiawan/FDN.git
+2. Install PgSql latest
 		
 
 ## How to build
@@ -26,41 +22,11 @@
 
 4. Run the sample:
 
-		node app.js
+		node bin/www	
 
-## How to build with docker
-1. Change directory to one of the sample folders, e.g. FDN:
+## API Doc
 
-		cd FDN/
-
-2. Configure the environment variables in the `.env` file:
-
-		cp prod-example.env .env
-
-3. Run the docker:
-
-		docker-compose up -d
-		
-
-## API Test
-### How to run all test
-
-	1. npm install
-
-	1. npm run unit-test
-
-
-## API Usage
-### GET API ORDER
-
-1. GET Order
-
-		`GET http://<server_ip>/api/v1/order?limit=&page=`
-  
-2. GET Order PIVOT
-
-		`GET http://<server_ip>/api/v1/order/pivot?limit=&page=`
-
+		`GET http://<server_ip>/api/doc/v1`
 
 ## Contributing
 

@@ -98,6 +98,48 @@ exports.findAllUser = async (req, res) => {
     }
 };
 
+exports.findAllDate = async (req, res) => {
+    // #swagger.tags = ['Purchasing API']
+    // #swagger.summary = 'findAll purchasing berdasarkan kurun waktu tertentu'
+    const day = req.query.day;
+    try {
+        let data = await Purchasing.count({
+            include: [{
+                model: Item,
+                where: {
+                    userId: req.user.id,
+                },
+                attributes: [], 
+            }],
+            attributes: ['itemId'], 
+            group: 'purchasing.itemId',
+            where:{
+                createdAt: {
+                    [Sequelize.Op.gte]: new Date(new Date() - (day * 24 * 60 * 60 * 1000))
+                }
+            }
+        });
+
+        for (let i = 0; i < data.length; i++) {
+            let item = await Item.findByPk(data[i].itemId, {
+                attributes: ['name']
+            });
+            data[i].item = item.dataValues.name;
+            data[i].order = data[i].count;
+            delete data[i].itemId;
+            delete data[i].count;
+        }
+          
+        return res.status(200).json({ 
+            status: true, 
+            message: 'success', 
+            data: data
+        });
+    } catch (error) {
+        return res.status(500).send({ message: error.message || 'Some error occurred while creating the Tutorial.' });
+    }
+};
+
 exports.findAllItem = async (req, res) => {
     // #swagger.tags = ['Purchasing API']
     // #swagger.summary = 'findAll item yang paling banyak terjual sampai yang paling sedikit terjual'

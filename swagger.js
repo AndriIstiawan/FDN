@@ -51,7 +51,7 @@ const doc = {
                     },
                     nama_toko: {
                         type: 'string',
-                        description: 'diisi untuk user pemilik membuka toko'
+                        description: 'diisi untuk user toko'
                     }
                 }
             },

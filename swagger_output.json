@@ -773,6 +773,42 @@
           }
         }
       }
+    },
+    "/order/time": {
+      "get": {
+        "tags": [
+          "Purchasing API"
+        ],
+        "summary": "findAll purchasing berdasarkan kurun waktu tertentu",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "day",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -796,7 +832,7 @@
           },
           "nama_toko": {
             "type": "string",
-            "description": "diisi untuk user pemilik membuka toko"
+            "description": "diisi untuk user toko"
           }
         }
       },

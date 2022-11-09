@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "unit-test": "NODE_ENV=unit-test nyc --reporter=lcov --reporter=text mocha \"tests/**/**_unitTest.js\" --exit --timeout 10000"
+    "start": "node ./bin/www"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
