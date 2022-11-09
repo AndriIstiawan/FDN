@@ -6,7 +6,12 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors'), bodyParser = require('body-parser');
 
-const apiOrderRoute = require('./component/order/routes');
+const swaggerUi = require('swagger-ui-express');
+const swaggerFile = require('./swagger_output.json');
+
+const apiOrderRoute = require('./component/purchasing/routes');
+const apiUserRoute = require('./component/users/routes');
+const apiItemRoute = require('./component/item/routes');
 
 const app = express();
 
@@ -22,8 +27,15 @@ app.use(cookieParser());
 app.get('/', function (req, res) {
     res.json({ message: 'This is the api server main route', status: 'OK' });
 });
+
 // API Routes
-app.use('/api/v1/', apiOrderRoute);
+app.use('/api/order/' + process.env.apiVersion, apiOrderRoute);
+app.use('/api/users/' + process.env.apiVersion, apiUserRoute);
+app.use('/api/items/' + process.env.apiVersion, apiItemRoute);
+
+app.use('/api/doc/' + process.env.apiVersion, (req, res, next) => {
+    next();
+}, swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -38,13 +50,7 @@ app.use(function (err, req, res, next) {
 
 const sequelize = require('./config/db.config');
 async function db() {
-    // if (process.env.NODE_ENV === 'test') {
-    //   const sequelizeTest = require('./config/db-test.config');
-    // } else {
-    await sequelize.sync();
-    const seed = require('./config/seed');
-    seed();
-    // }
+    await sequelize.sync({ force: false, alter: true });    
 }
 db();
 
