@@ -16,6 +16,9 @@ const User = db.define('user', {
         },
         allowNull: false
     },
+    nama_toko: {
+        type: DataTypes.TEXT, 
+    },
     password: {
         type: DataTypes.TEXT,
         allowNull: false

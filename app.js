@@ -29,7 +29,7 @@ app.get('/', function (req, res) {
 });
 
 // API Routes
-app.use('/api/order/' + process.env.apiVersion, apiOrderRoute);
+app.use('/api/purchasing/' + process.env.apiVersion, apiOrderRoute);
 app.use('/api/users/' + process.env.apiVersion, apiUserRoute);
 app.use('/api/items/' + process.env.apiVersion, apiItemRoute);
 

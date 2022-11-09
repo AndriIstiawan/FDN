@@ -1,4 +1,6 @@
 const Purchasing = require('./model');
+const User = require('../users/model');
+const Item = require('../item/model');
 const { create } = require('./validation');
 const Sequelize = require('sequelize');
 const { fn, col } = Purchasing.sequelize;
@@ -6,10 +8,24 @@ const { fn, col } = Purchasing.sequelize;
 // Retrieve all Tutorials from the database.
 exports.create = async (req, res) => {
     // #swagger.tags = ['Purchasing API']
+    // #swagger.summary = 'create purchasing'
+    /*  #swagger.parameters['obj'] = {
+                in: 'body',
+                description: 'Some description...',
+                schema: {
+                    itemId: '123-abc',
+                }
+        } */
     let { error, value } = create(req.body);
     if (error) return res.status(400).json({ staus: false, message: error.message });
     try {
         value.userId = req.user.id;
+        const itemUser = await Item.findOne({
+            where: {
+                id: value.itemId
+            }
+        });
+        if (!itemUser) return res.status(404).send({ status: false, message: 'item not found' });
         const result = await Purchasing.create(value);
         return res.status(201).json({ 
             status: true, 
@@ -22,47 +38,98 @@ exports.create = async (req, res) => {
 };
 
 // Find all published Tutorials
-// exports.findAll = async (req, res) => {
-//     try {
-//         const { limit, page } = req.query;
+exports.findAll = async (req, res) => {
+    // #swagger.tags = ['Purchasing API']
+    // #swagger.summary = 'findAll purchasing by user toko'
+    try {
+        const data = await Purchasing.findAll({
+            include: [{
+                model: Item,
+                where: {
+                    userId: req.user.id,
+                },
+            },     
+            User],
+        });
+        return res.status(200).json({ 
+            status: true, 
+            message: 'success', 
+            data: data
+        });
+    } catch (error) {
+        return res.status(500).send({ message: error.message || 'Some error occurred while creating the Tutorial.' });
+    }
+};
 
-//         const pageLimit = parseInt(limit, 10) || 10;
-//         const pageSize = parseInt(page, 10) || 1;
+// Find all published Tutorials
+exports.findAllUser = async (req, res) => {
+    // #swagger.tags = ['Purchasing API']
+    // #swagger.summary = 'findAll pelanggan setia'
+    try {
+        let data = await Purchasing.count({
+            include: [{
+                model: Item,
+                where: {
+                    userId: req.user.id,
+                },
+                attributes: [], 
+            }],
+            attributes: ['userId'], 
+            group: 'purchasing.userId',
+        });
 
-//         const getPreviousPage = (pageSize) => {
-//             if (pageSize <= 1) {
-//                 return false;
-//             }
-//             return true;
-//         };
-//         const getNextPage = (page, limit, total) => {
-//             if ((total / limit) > page) {
-//                 return true;
-//             }
+        for (let i = 0; i < data.length; i++) {
+            let user = await User.findByPk(data[i].userId, {
+                attributes: ['username']
+            });
+            data[i].user = user.dataValues.username;
+            data[i].order = data[i].count;
+            delete data[i].userId;
+            delete data[i].count;
+        }
+          
+        return res.status(200).json({ 
+            status: true, 
+            message: 'success', 
+            data: data.sort((a, b) => b.order - a.order)
+        });
+    } catch (error) {
+        return res.status(500).send({ message: error.message || 'Some error occurred while creating the Tutorial.' });
+    }
+};
 
-//             return false;
-//         };
-//         // Save Tutorial in the database
-//         const { count, rows } = await Order.findAndCountAll({
-//             order: [
-//                 [Sequelize.cast(Sequelize.col('id'), 'UNSIGNED'), 'ASC']
-//             ],
-//             limit: pageLimit,
-//             offset: (pageSize * pageLimit) - pageLimit,
-//             raw: true,
-//             plain: false,
-//         });
+exports.findAllItem = async (req, res) => {
+    // #swagger.tags = ['Purchasing API']
+    // #swagger.summary = 'findAll item yang paling banyak terjual sampai yang paling sedikit terjual'
+    try {
+        let data = await Purchasing.count({
+            include: [{
+                model: Item,
+                where: {
+                    userId: req.user.id,
+                },
+                attributes: [], 
+            }],
+            attributes: ['itemId', 'count'], 
+            group: 'purchasing.itemId'
+        });
 
-//         return res.json({
-//             previousPage: getPreviousPage(pageSize),
-//             currentPage: pageSize,
-//             nextPage: getNextPage(pageSize, pageLimit, count),
-//             total: count,
-//             totalPage: count / pageLimit,
-//             limit: pageLimit,
-//             data: rows
-//         });
-//     } catch (error) {
-//         return res.status(500).send({ message: error.message || 'Some error occurred while creating the Tutorial.' });
-//     }
-// };
+        for (let i = 0; i < data.length; i++) {
+            let item = await Item.findByPk(data[i].itemId, {
+                attributes: ['name']
+            });
+            data[i].item = item.dataValues.name;
+            data[i].order = data[i].count;
+            delete data[i].itemId;
+            delete data[i].count;
+        }
+        
+        return res.status(200).json({ 
+            status: true, 
+            message: 'success', 
+            data: data.sort((a, b) => b.order - a.order)
+        });
+    } catch (error) {
+        return res.status(500).send({ message: error.message || 'Some error occurred while creating the Tutorial.' });
+    }
+};

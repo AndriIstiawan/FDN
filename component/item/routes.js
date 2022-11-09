@@ -10,4 +10,8 @@ router.get('/list-item', item.getAll);
 
 router.get('/list-item/me', verifyToken, item.getme);
 
+router.delete('/delete/:id', verifyToken, item.delete);
+
+router.put('/update/:id', verifyToken, item.update);
+
 module.exports = router;

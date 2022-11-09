@@ -6,7 +6,7 @@ const doc = {
         title: 'My API',
         description: 'Description',
     },
-    host: 'localhost:1337',
+    host: 'https://toko-mini.herokuapp.com',
     basePath: '/',
     schemes: ['http'],
     securityDefinitions: {
@@ -47,6 +47,48 @@ const doc = {
                         type: 'string',
                     },
                     password: {
+                        type: 'string',
+                    },
+                    nama_toko: {
+                        type: 'string',
+                        description: 'diisi untuk user pemilik membuka toko'
+                    }
+                }
+            },
+            Items: {
+                type: 'object',
+                required: [
+                    'name',
+                    'userId'
+                ],
+                properties: {
+                    id: {
+                        type: 'string',
+                        description: 'auto generate from db'
+                    },
+                    userId: {
+                        type: 'string',
+                    },
+                    name: {
+                        type: 'string',
+                    }
+                }
+            },
+            Purchasings: {
+                type: 'object',
+                required: [
+                    'userId',
+                    'itemId'
+                ],
+                properties: {
+                    id: {
+                        type: 'string',
+                        description: 'auto generate from db'
+                    },
+                    userId: {
+                        type: 'string',
+                    },
+                    itemId: {
                         type: 'string',
                     }
                 }

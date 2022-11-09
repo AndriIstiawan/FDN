@@ -20,6 +20,6 @@ const Item = db.define('item', {
     }
 });
 
-Item.belongsTo(User, { foreignKey: 'userId' });
+Item.belongsTo(User, { foreignKey: 'userId', onDelete: 'CASCADE' });
 
 module.exports = Item;
