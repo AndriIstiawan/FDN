@@ -19,15 +19,15 @@ const doc = {
     tags: [ 
         {
             name: 'User API', // Tag name
-            description: '', // Tag description
+            description: '/api/users/v1', // Tag description
         }, 
         {
             name: 'Item API', // Tag name
-            description: '', // Tag description
+            description: '/api/items/v1', // Tag description
         }, 
         {
             name: 'Purchasing API', // Tag name
-            description: '', // Tag description
+            description: '/api/purchasing/v1', // Tag description
         },
     ],  
     components: {

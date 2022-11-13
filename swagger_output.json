@@ -8,15 +8,15 @@
   "tags": [
     {
       "name": "User API",
-      "description": ""
+      "description": "/api/users/v1"
     },
     {
       "name": "Item API",
-      "description": ""
+      "description": "/api/items/v1"
     },
     {
       "name": "Purchasing API",
-      "description": ""
+      "description": "/api/purchasing/v1"
     }
   ],
   "paths": {
