@@ -5,11 +5,7 @@
     "title": "My API",
     "description": "Description"
   },
-  "servers": [
-    {
-      "url": "http://localhost:3000/"
-    }
-  ],
+  "servers": "https://toko-mini.herokuapp.com",
   "tags": [
     {
       "name": "User API",
@@ -887,6 +883,5 @@
         "bearerFormat": "JWT"
       }
     }
-  },
-  "server": "https://toko-mini.herokuapp.com"
+  }
 }

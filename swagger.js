@@ -6,7 +6,7 @@ const doc = {
         title: 'My API',
         description: 'Description',
     },
-    server: 'https://toko-mini.herokuapp.com',
+    servers: 'https://toko-mini.herokuapp.com',
     basePath: '/',
     schemes: ['http'],
     securityDefinitions: {
