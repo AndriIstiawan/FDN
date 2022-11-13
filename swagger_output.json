@@ -5,7 +5,11 @@
     "title": "My API",
     "description": "Description"
   },
-  "servers": "https://toko-mini.herokuapp.com",
+  "servers": [
+    {
+      "url": "https://toko-mini.herokuapp.com"
+    }
+  ],
   "tags": [
     {
       "name": "User API",
