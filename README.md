@@ -24,9 +24,12 @@
 
 		node bin/www	
 
-## API Doc
+## Base API
 
-		`GET http://<server_ip>/api/doc/v1`
+	1. Api Doc	`GET http://<server_ip>/api/doc/v1`
+	2. Api Purchasing	`GET http://<server_ip>/api/purchasing/v1`
+	2. Api Users	`GET http://<server_ip>/api/users/v1`
+	2. Api Items	`GET http://<server_ip>/api/items/v1`
 
 ## Contributing
 
